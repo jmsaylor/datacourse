@@ -25,9 +25,7 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
-print(regressor.summary())
-
-predictions = regressor.predict(X_test)
+#predictions = regressor.predict(X_test)
 
 #Backward Elimination
 regressor_backward = LinearRegression()
@@ -36,20 +34,21 @@ regressor_backward.fit(X_backward, y_train)
 X_test_backward = X_test[:, [2, 4]]
 predictions_backward = regressor_backward.predict(X_test_backward)
 
+
+sample_size, indep_vars = X_backward.shape
+
+from sklearn.metrics import r2_score
+r2 = sklearn.metrics.r2_score(y_test, predictions_backward)
+r2_adjusted = 1-(1-r2)*(sample_size - 1)/(sample_size - (indep_vars + 1) - 1)
+
+mean_abs_error = sklearn.metrics.mean_absolute_error(y_test, predictions_backward)
+
 from statsmodels.regression.linear_model import OLS
 
 import statsmodels.formula.api as smf
 import statsmodels.api as sm
 #but...we add it back, in a way, for analysis. b * 1 = b
 X = np.append(arr = np.ones((len(X), 1)).astype('float64'), values = X, axis=1)
-X_optimal = X[:, [0, 1, 2, 3, 4, 5]]
-regressor_OLS = OLS(endog = y, exog = X_optimal).fit()
-
-X_optimal = X[:, [0, 1, 3, 4, 5]]
-regressor_OLS = OLS(endog = y, exog = X_optimal).fit()
-
-X_optimal = X[:, [0, 3, 4, 5]]
-regressor_OLS = OLS(endog = y, exog = X_optimal).fit()
 
 X_optimal = X[:, [0, 3, 5]]
 regressor_OLS = OLS(endog = y, exog = X_optimal).fit()

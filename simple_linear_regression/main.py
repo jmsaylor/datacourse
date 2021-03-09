@@ -26,7 +26,6 @@ r2 = sklearn.metrics.r2_score(y_test, y_predictions)
 #r2_adjusted = 1-(1-r2)*(sample_size - 1)/(sample_size - indep_vars - 1)
 
 
-
 plt.scatter(X_train, y_train, color = 'green')
 plt.plot(X_train, regressor.predict(X_train), color = 'blue')
 plt.title('Salary vs. Experience (Training Set)')
