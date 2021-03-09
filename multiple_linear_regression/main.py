@@ -25,6 +25,8 @@ from sklearn.linear_model import LinearRegression
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
+print(regressor.summary())
+
 predictions = regressor.predict(X_test)
 
 #Backward Elimination

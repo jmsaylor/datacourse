@@ -17,6 +17,9 @@ regressor.fit(X, y)
 
 prediction = regressor.predict(np.array(6.5).reshape(-1,1))
 
+import sklearn.metrics as metrics
+print(metrics.classification_report(y, regressor.predict(X)))
+
 #Visualizing (for high resolution)
 X_grid = np.arange(min(X), max(X), 0.01)
 X_grid = X_grid.reshape((len(X_grid), 1))

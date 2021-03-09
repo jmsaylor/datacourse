@@ -16,14 +16,25 @@ regressor.fit(X_train, y_train)
 
 y_predictions = regressor.predict(X_test)
 
+from sklearn.metrics import r2_score
+
+sample_size, indep_vars = X_train.shape
+
+r2 = sklearn.metrics.r2_score(y_test, y_predictions)
+
+#Not needed for single linear regression
+#r2_adjusted = 1-(1-r2)*(sample_size - 1)/(sample_size - indep_vars - 1)
+
+
+
 plt.scatter(X_train, y_train, color = 'green')
 plt.plot(X_train, regressor.predict(X_train), color = 'blue')
 plt.title('Salary vs. Experience (Training Set)')
 plt.xlabel('Years of Experience')
 plt.ylabel('Salary')
 
-plt_test.scatter(X_test, y_test, color = 'purple')
-plt_test.plot(X_train, regressor.predict(X_train), color = 'yellow')
-plt_test.title('Salary vs. Experience (Test Set)')
-plt_test.xlabel('Years of Experience')
-plt_test.ylabel('Salary')
+#plt_test.scatter(X_test, y_test, color = 'purple')
+#plt_test.plot(X_train, regressor.predict(X_train), color = 'yellow')
+#plt_test.title('Salary vs. Experience (Test Set)')
+#plt_test.xlabel('Years of Experience')
+#plt_test.ylabel('Salary')
