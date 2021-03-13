@@ -23,4 +23,25 @@ y_pred = classifier.predict(X_test)
 
 #confusion matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred, labels=[1, 0])
+cm = confusion_matrix(y_test, y_pred)
+
+
+from matplotlib.colors import ListedColormap
+X_set, y_set = X_test, y_test
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
+                     np. arange(start = X_set[:, 1].min() -1, stop = X_set[:, 1].max() + 1, step = 0.01))
+
+X1_shape, X2_shape = X1.shape, X2.shape
+
+predictions = classifier.predict(np.array([X1.ravel(), X2.ravel()], dtype=float).T).reshape(X1.shape)
+
+plt.contourf(X1, X2, predictions,
+             alpha = 0.75, cmap = ListedColormap(('red','green')))
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
+                c = ListedColormap(('red', 'green'))(i), label = j)
+plt.title('Logistic Regression')
+plt.xlabel('Age')
+plt.ylabel('Salary')
+plt.legend()
+plt.show()
