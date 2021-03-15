@@ -14,10 +14,11 @@ from sklearn.preprocessing import StandardScaler
 scale_x = StandardScaler().fit(X_train)
 X_train = scale_x.transform(X_train)
 X_test = scale_x.transform(X_test)
-
-from sklearn.neighbors import KNeighborsClassifier
-classifier = KNeighborsClassifier(n_neighbors=5, metric="minkowski", p=2)
+ 
+from sklearn.svm import SVC
+classifier = SVC(kernel = 'rbf', random_state=0)
 classifier.fit(X_train, y_train)
+
 
 y_pred = classifier.predict(X_test)
 
@@ -40,7 +41,7 @@ plt.contourf(X1, X2, predictions,
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
                 c = ListedColormap(('red', 'green'))(i), label = j)
-plt.title('K Nearest Neighbors')
+plt.title('SVM')
 plt.xlabel('Age')
 plt.ylabel('Salary')
 plt.legend()
